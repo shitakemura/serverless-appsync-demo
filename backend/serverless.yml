@@ -25,6 +25,9 @@ custom:
       - type: Query
         field: getBookById
         dataSource: booksTable
+      - type: Mutation
+        field: createBook
+        dataSource: booksTable
     datasources:
       - type: AMAZON_DYNAMODB
         name: booksTable
