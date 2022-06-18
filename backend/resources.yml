@@ -33,14 +33,14 @@ orderTable:
       - AttributeName: "orderId"
         KeyType: "RANGE"
     GlobalSecondaryIndexes: 
-      IndexName: "byOrder"
-      KeySchema: 
+      - IndexName: "byOrder"
+        KeySchema: 
         - AttributeName: "bookId"
           KeyType: "HASH"
         - AttributeName: "createdAt"
           KeyType: "RANGE"
-      Projection: 
-        ProjectionType: ALL
+        Projection: 
+          ProjectionType: "ALL"
     Tags: 
       - Key: Name
         Value: order-table
@@ -57,7 +57,7 @@ cognitoUserPool:
 cognitoUserPoolClient:
   Type: AWS::Cognito::UserPoolClient
   Properties:
-    ClientName: "Web"
+    ClientName: "web"
     UserPoolId: !Ref cognitoUserPool
 
 # Cognito user pool Admin group
@@ -65,9 +65,9 @@ cognitoAdminGroup:
   Type: AWS::Cognito::UserPoolGroup
   Properties:
     Description: "Admin users belongs to this group"
-    GroupName: "Admin"
-    plecedence: 0
-    RoleArn: !GetAtt congnitoAdminIAMRole.Arn
+    GroupName: "admin"
+    Precedence: 0
+    RoleArn: !GetAtt cognitoAdminIAMRole.Arn
     UserPoolId: !Ref cognitoUserPool
 
 # Cognito Admin IAM role
@@ -102,13 +102,13 @@ cognitoCustomerGroup:
   Type: AWS::Cognito::UserPoolGroup
   Properties:
     Description: "Customers users belongs to this group"
-    GroupName: "Customer"
-    plecedence: 1
-    RoleArn: !GetAtt cognitoUserIAMRole.Arn
+    GroupName: "customer"
+    Precedence: 1
+    RoleArn: !GetAtt cognitoCustomerIAMRole.Arn
     UserPoolId: !Ref cognitoUserPool
 
-# Cognito User IAM role
-cognitoUserIAMRole:
+# Cognito Customre IAM role
+cognitoCustomerIAMRole:
   Type: AWS::IAM::Role
   Properties:
     AssumeRolePolicyDocument:

@@ -10,4 +10,5 @@ provider:
   region: ap-northeast-1
 
 resources:
-  ${file(./resources.yml)}
+  Resources:
+    ${file(./resources.yml)}
