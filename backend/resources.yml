@@ -44,3 +44,98 @@ orderTable:
     Tags: 
       - Key: Name
         Value: order-table
+  
+# Cognito user pool
+cognitoUserPool:
+  Type: AWS::Cognito::UserPool
+  Properties: 
+    UsernameAttributes: 
+      - "email"
+    UserPoolName: "YoutubeBookstoreUserPool"
+
+# Cognito user pool client
+cognitoUserPoolClient:
+  Type: AWS::Cognito::UserPoolClient
+  Properties:
+    ClientName: "Web"
+    UserPoolId: !Ref cognitoUserPool
+
+# Cognito user pool Admin group
+cognitoAdminGroup:
+  Type: AWS::Cognito::UserPoolGroup
+  Properties:
+    Description: "Admin users belongs to this group"
+    GroupName: "Admin"
+    plecedence: 0
+    RoleArn: !GetAtt congnitoAdminIAMRole.Arn
+    UserPoolId: !Ref cognitoUserPool
+
+# Cognito Admin IAM role
+cognitoAdminIAMRole:
+  Type: AWS::IAM::Role
+  Properties:
+    AssumeRolePolicyDocument:
+      Version: "2012-10-17"
+      Statement:
+        - Effect: Allow
+          Principal:
+            Federated:
+              - "cognito-identity.amazonaws.com"
+          Action:
+            - "sts:AssumeRoleWithWebIdentity"
+    Description: "This is the IAM role that admin group users assume"
+    Policies:
+      - PolicyName: "youtube-bookstore-admin-group-policy"
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - "dynamodb:*"
+              Resource:
+                - !GetAtt booksTable.Arn
+                - !GetAtt orderTable.Arn
+    RoleName: "youtube-bookstore-admin-role"
+
+# Cognito user pool Customer group
+cognitoCustomerGroup:
+  Type: AWS::Cognito::UserPoolGroup
+  Properties:
+    Description: "Customers users belongs to this group"
+    GroupName: "Customer"
+    plecedence: 1
+    RoleArn: !GetAtt cognitoUserIAMRole.Arn
+    UserPoolId: !Ref cognitoUserPool
+
+# Cognito User IAM role
+cognitoUserIAMRole:
+  Type: AWS::IAM::Role
+  Properties:
+    AssumeRolePolicyDocument:
+      Version: "2012-10-17"
+      Statement:
+        - Effect: Allow
+          Principal:
+            Federated:
+              - "cognito-identity.amazonaws.com"
+          Action:
+            - "sts:AssumeRoleWithWebIdentity"
+    Description: "This is the IAM role that customer group users assume"
+    Policies:
+      - PolicyName: "youtube-bookstore-customer-group-policy"
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action:
+                - "dynamodb:*"
+              Resource:
+                - !GetAtt orderTable.Arn
+            - Effect: Allow
+              Action:
+                - "dynamodb:GetItem"
+                - "dynamodb:Query"
+                - "dynamodb:BatchGetItem"
+              Resource:
+                - !GetAtt booksTable.Arn
+    RoleName: "youtube-bookstore-customer-role"
