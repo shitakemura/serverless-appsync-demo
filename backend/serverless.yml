@@ -12,6 +12,25 @@ provider:
 plugins:
   - serverless-appsync-plugin
 
+custom:
+  appSync:
+    name: youtubeAppSyncAPI
+    authenticationType: AMAZON_COGNITO_USER_POOLS
+    userPoolConfig:
+      awsRegion: ap-northeast-1
+      defaultAction: ALLOW
+      userPoolId: !Ref cognitoUserPool
+    mappingTemplatesLocation: mapping-templates
+    mappingTemplates:
+      - type: Query
+        field: getBookById
+        dataSource: booksTable
+    datasources:
+      - type: AMAZON_DYNAMODB
+        name: booksTable
+        config:
+          tableName: !Ref booksTable
+
 resources:
   Resources:
     ${file(./resources.yml)}
