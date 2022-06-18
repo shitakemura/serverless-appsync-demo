@@ -9,6 +9,9 @@ provider:
   stage: dev
   region: ap-northeast-1
 
+plugins:
+  - serverless-appsync-plugin
+
 resources:
   Resources:
     ${file(./resources.yml)}

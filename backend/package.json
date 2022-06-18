@@ -1,0 +1,8 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "license": "MIT",
+  "devDependencies": {
+    "serverless-appsync-plugin": "^1.13.0"
+  }
+}
