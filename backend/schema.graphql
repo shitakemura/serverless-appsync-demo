@@ -1,0 +1,62 @@
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+type Query {
+  getBookById(bookId: ID!): Book!
+  listBooks(limit: Int!, nextToken: String): BooksPage!
+  myOrders(limit: Int!, nextToken: String): OrderItemsPage!
+}
+
+type Mutation {
+  createBook(newBook: BookInput): Book! @aws_auth(cognito_groups: ["admin"])
+  createOrder(newOrder: OrderInput): Boolean! 
+}
+
+# Book
+input BookInput {
+  title: String!
+  description: String
+  imageUrl: AWSURL
+  author: String!
+  price: Float!
+}
+
+type Book {
+  bookId: ID!
+  title: String!
+  description: String
+  imageUrl: AWSURL
+  author: String!
+  price: Float!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!  
+}
+
+type BooksPage {
+  books: [Book]
+  nextToken: String
+}
+
+# Order
+input OrderInput {
+  items: [OrderItemInput]
+}
+
+input OrderItemInput {
+  bookId: ID!
+  quantity: Int!
+}
+
+type OrderItem {
+  userId: ID!
+  orderId: ID!
+  book: Book!
+  quantity: Int!
+}
+
+type OrderItemsPage {
+  orderItems: [OrderItem]
+  nextToken: String
+}
