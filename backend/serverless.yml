@@ -14,7 +14,7 @@ plugins:
 
 custom:
   appSync:
-    name: youtubeAppSyncAPI
+    name: youtubeAppSyncApi
     authenticationType: AMAZON_COGNITO_USER_POOLS
     userPoolConfig:
       awsRegion: ap-northeast-1
@@ -28,7 +28,7 @@ custom:
       - type: Mutation
         field: createBook
         dataSource: booksTable
-    datasources:
+    dataSources:
       - type: AMAZON_DYNAMODB
         name: booksTable
         config:
