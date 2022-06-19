@@ -25,6 +25,9 @@ custom:
       - type: Query
         field: getBookById
         dataSource: booksTable
+      - type: Query
+        field: listBooks
+        dataSource: booksTable
       - type: Mutation
         field: createBook
         dataSource: booksTable
@@ -35,5 +38,4 @@ custom:
           tableName: !Ref booksTable
 
 resources:
-  Resources:
-    ${file(./resources.yml)}
+  Resources: ${file(./resources.yml)}
