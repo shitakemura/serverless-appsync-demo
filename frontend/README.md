@@ -1,3 +1,11 @@
+Ref: AWS Amplify Doc
+
+- Auth
+  - https://docs.amplify.aws/lib/auth/start/q/platform/js/#re-use-existing-authentication-resource
+- UI
+  - https://ui.docs.amplify.aws/react/getting-started/usage/nextjs
+  - https://ui.docs.amplify.aws/react/components/authenticator
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
