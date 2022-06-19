@@ -10,6 +10,7 @@ Ref: AWS Amplify Doc
 - generate AppSync graphQL schema from client
   - https://www.grandream.jp/blog/generate-appsync-graphql-schema/
   - https://github.com/dotansimha/graphql-code-generator/discussions/4311#discussioncomment-2921796
+  - https://www.graphql-code-generator.com/plugins/typed-document-node
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
