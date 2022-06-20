@@ -6,6 +6,7 @@ import {
   ListBooksQueryVariables,
 } from '../../graphql/generated/graphql'
 import { useEffect, useState } from 'react'
+import { BookItem } from './BookItem'
 
 export const BookList = () => {
   const [data, setData] = useState<ListBooksQuery>()
@@ -17,14 +18,19 @@ export const BookList = () => {
           limit: 10,
         } as ListBooksQueryVariables)
       )) as GraphQLResult<ListBooksQuery>
-
       setData(data)
     }
 
     getBookList()
   }, [])
 
-  console.log(`data: ${JSON.stringify(data)}`)
+  if (!data?.listBooks.books) return null
 
-  return <div>BookList</div>
+  return (
+    <div>
+      {data.listBooks.books.map((book) => {
+        if (book) return <BookItem key={book.bookId} book={book} />
+      })}
+    </div>
+  )
 }
