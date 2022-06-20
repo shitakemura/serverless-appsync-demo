@@ -10,6 +10,7 @@ import {
   GetBookByIdQueryVariables,
 } from '../graphql/generated/graphql'
 import { useState } from 'react'
+import { BookList } from '../components/BookList/BookList'
 
 const App: NextPage = () => {
   const [data, setData] = useState<GetBookByIdQuery>()
@@ -42,6 +43,7 @@ const App: NextPage = () => {
             </article>
           )}
           <button onClick={signOut}>Sign out</button>
+          <BookList />
         </main>
       )}
     </Authenticator>
