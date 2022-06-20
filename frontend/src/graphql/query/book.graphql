@@ -7,3 +7,16 @@ query getBookById($id: ID!) {
     author
   }
 }
+
+query listBooks($limit: Int!, $nextToken: String) {
+  listBooks(limit: $limit, nextToken: $nextToken) {
+    books {
+      bookId
+      title
+      description
+      price
+      author
+    }
+    nextToken
+  }
+}
